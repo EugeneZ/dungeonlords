@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  db: 'mongodb://localhost/mean-prod',
+  db: 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@linus.mongohq.com:10010/dungeonlords',
   /**
    * Database options that will be passed directly to mongoose.connect
    * Below are some examples.
