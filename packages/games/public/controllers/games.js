@@ -5,8 +5,8 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
         $scope.global = Global;
 
         $scope.hasAuthorization = function(game) {
-            if (!game || !game.user) return false;
-            return $scope.global.isAdmin || game.user._id === $scope.global.user._id;
+            if (!game || !game.owner) return false;
+            return $scope.global.isAdmin || game.owner._id === $scope.global.user._id;
         };
 
         $scope.create = function(isValid) {

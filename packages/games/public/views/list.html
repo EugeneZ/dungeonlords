@@ -2,7 +2,7 @@
   <ul class="games unstyled">
     <li data-ng-repeat="game in games">
       <span>{{game.created | date:'medium'}}</span> /
-      <span>{{game.user.name}}</span>
+      <span>{{game.owner.name}}</span>
       <h2>
         <a data-ng-href="#!/games/{{game._id}}">{{game.title}}</a>
         <span data-ng-if="hasAuthorization(game)">

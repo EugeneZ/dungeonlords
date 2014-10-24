@@ -25,7 +25,7 @@ exports.game = function(req, res, next, id) {
  */
 exports.create = function(req, res) {
     var game = new Game(req.body);
-    game.user = req.user;
+    game.owner = req.user;
 
     game.save(function(err) {
         if (err) {
@@ -85,7 +85,7 @@ exports.show = function(req, res) {
  * List of Games
  */
 exports.all = function(req, res) {
-    Game.find().sort('-created').populate('user', 'name username').exec(function(err, games) {
+    Game.find().sort('-created').populate('owner', 'name username').exec(function(err, games) {
         if (err) {
             return res.json(500, {
                 error: 'Cannot list the games'
