@@ -1,21 +1,21 @@
-<section data-ng-controller="ArticlesController" data-ng-init="find()">
-  <ul class="articles unstyled">
-    <li data-ng-repeat="article in articles">
-      <span>{{article.created | date:'medium'}}</span> /
-      <span>{{article.user.name}}</span>
+<section data-ng-controller="GamesController" data-ng-init="find()">
+  <ul class="games unstyled">
+    <li data-ng-repeat="game in games">
+      <span>{{game.created | date:'medium'}}</span> /
+      <span>{{game.user.name}}</span>
       <h2>
-        <a data-ng-href="#!/articles/{{article._id}}">{{article.title}}</a>
-        <span data-ng-if="hasAuthorization(article)">
-          <a class="btn" href="/#!/articles/{{article._id}}/edit">
+        <a data-ng-href="#!/games/{{game._id}}">{{game.title}}</a>
+        <span data-ng-if="hasAuthorization(game)">
+          <a class="btn" href="/#!/games/{{game._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>
           </a>
-          <a class="btn" data-ng-click="remove(article);">
+          <a class="btn" data-ng-click="remove(game);">
             <i class="glyphicon glyphicon-trash"></i>
           </a>
         </span>
       </h2>
-      <div>{{article.content}}</div>
+      <div>{{game.content}}</div>
     </li>
   </ul>
-  <h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a href="/#!/articles/create">Create One</a>?</h1>
+  <h1 data-ng-hide="!games || games.length">No games yet. <br> Why don't you <a href="/#!/games/create">Create One</a>?</h1>
 </section>

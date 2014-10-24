@@ -1,1 +1,1 @@
-README: articles
+README: games
