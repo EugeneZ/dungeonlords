@@ -1,10 +1,8 @@
 'use strict';
 
-angular.module('mean.users').factory('MeanUser', [
+angular.module('mean.users').factory('MeanUser', [ '$resource',
 
-  function() {
-    return {
-      name: 'users'
-    };
+  function($resource) {
+    return $resource('users/:userid');
   }
 ]);

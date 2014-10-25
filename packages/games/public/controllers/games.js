@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Global', 'Games',
-    function($scope, $stateParams, $location, Global, Games) {
+angular.module('mean.games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Global', 'Games', 'MeanUser',
+    function($scope, $stateParams, $location, Global, Games, MeanUser) {
         $scope.global = Global;
 
         $scope.hasAuthorization = function(game) {
@@ -12,15 +12,13 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
         $scope.create = function(isValid) {
             if (isValid) {
                 var game = new Games({
-                    title: this.title,
-                    content: this.content
+                    title: this.title
                 });
                 game.$save(function(response) {
                     $location.path('games/' + response._id);
                 });
 
                 this.title = '';
-                this.content = '';
             } else {
                 $scope.submitted = true;
             }
@@ -69,6 +67,13 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
                 gameid: $stateParams.gameid
             }, function(game) {
                 $scope.game = game;
+            });
+        };
+
+        $scope.beginCreate = function() {
+            $scope.title = Global.user.name + '\'s Game';
+            MeanUser.query(function(users) {
+                $scope.users = users;
             });
         };
     }

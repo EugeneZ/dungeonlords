@@ -101,6 +101,21 @@ exports.create = function(req, res, next) {
     res.status(200);
   });
 };
+
+/**
+ * Get all public users
+ */
+exports.all = function(req, res) {
+    User.find().select('id name').sort('+name').exec(function(err, users) {
+        if (err) {
+            return res.json(500, {
+                error: 'Cannot list the users'
+            });
+        }
+        res.json(users);
+    });
+};
+
 /**
  * Send User
  */
