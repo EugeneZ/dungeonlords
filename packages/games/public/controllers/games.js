@@ -3,6 +3,7 @@
 angular.module('mean.games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Global', 'Games', 'MeanUser',
     function($scope, $stateParams, $location, Global, Games, MeanUser) {
         $scope.global = Global;
+        $scope.players = [];
 
         $scope.hasAuthorization = function(game) {
             if (!game || !game.owner) return false;
@@ -12,7 +13,8 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
         $scope.create = function(isValid) {
             if (isValid) {
                 var game = new Games({
-                    title: this.title
+                    title: this.title,
+                    players: $scope.players
                 });
                 game.$save(function(response) {
                     $location.path('games/' + response._id);

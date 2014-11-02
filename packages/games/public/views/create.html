@@ -10,10 +10,10 @@
       </div>
 
     </div>
-    <div class="form-group" ng-class="{ 'has-error' : submitted && gameForm['player' + num].$invalid }" ng-repeat="num in [1,2,3,4]">
-      <label for="player{{num}}" class="col-md-3 control-label">Player {{num}}</label>
+    <div class="form-group" ng-class="{ 'has-error' : submitted && gameForm['player' + num].$invalid }" ng-repeat="num in [0,1,2,3]">
+      <label for="player{{num}}" class="col-md-3 control-label">Player {{num + 1}}</label>
       <div class="col-md-9">
-        <select name="player{{num}}" id="player{{num}}" class="form-control" ng-model="player[num]" ng-options="user.name for user in users" roster>
+        <select name="player{{num}}" id="player{{num}}" class="form-control" ng-model="players[num]" ng-options="user.name for user in users" roster>
             <option value="">No player</option>
         </select>
         <div ng-show="submitted && gameForm['player' + num].$invalid" class="help-block">

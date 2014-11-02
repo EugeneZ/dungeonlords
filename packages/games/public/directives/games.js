@@ -9,7 +9,7 @@ angular.module('mean.games').directive('roster', function(){
                 var index = parseInt(ctrl.$name.replace('player', ''));
                 var value = (viewValue && viewValue._id) ? viewValue._id : null;
 
-                return !(index < 3 && !value);
+                return !(index < 2 && !value);
             };
         }
     };
