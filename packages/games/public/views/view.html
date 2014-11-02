@@ -1,14 +1,15 @@
 <section data-ng-controller="GamesController" data-ng-init="findOne()">
-  <span>{{game.created | date:'medium'}}</span> /
-  <span>{{game.owner.name}}</span>
-  <h2>{{game.title}}</h2>
-  <div data-ng-if="hasAuthorization(game)">
-    <a class="btn" href="/#!/games/{{game._id}}/edit">
-      <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    <a class="btn" data-ng-click="remove(game);">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
-  </div>
-  <div>{{game.content}}</div>
+    <div>
+        <div class="pull-right">
+            <a class="btn" href="/#!/games/{{game._id}}/edit">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a class="btn" data-ng-click="remove(game);">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
+        <h2>{{game.title}}</h2>
+    </div>
+    <img src="/theme/assets/img/board.jpg" class="img-responsive"/>
+
 </section>
