@@ -1,6 +1,6 @@
 <section data-ng-controller="GamesController" data-ng-init="findOne()">
     <div>
-        <div class="pull-right">
+        <div class="pull-right" data-ng-if="hasAuthorization(game)">
             <a class="btn" href="/#!/games/{{game._id}}/edit">
                 <i class="glyphicon glyphicon-edit"></i>
             </a>
@@ -10,6 +10,20 @@
         </div>
         <h2>{{game.title}}</h2>
     </div>
+
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li role="presentation" class="active" ng-repeat="player in game.players"><a data-ng-click="board(player)">{{player.user.name}}</a></li>
+    </ul>
+
+    <div class="tab-pane" ng-repeat="player in game.players" data-ng-show="activeBoard(player)">
+        <img src="/theme/assets/img/playerboard.jpg" class="img-responsive pull-left"/>
+        <ul class="list-group">
+            <li class="list-group-item"><span class="badge">{{player.gold}}</span><img src="/theme/assets/img/gold.jpg" title="Gold" alt="Gold"/>Gold</li>
+            <li class="list-group-item"><span class="badge">{{player.food}}</span><img src="/theme/assets/img/food.jpg" title="Gold" alt="Gold"/>Food</li>
+            <li class="list-group-item"><span class="badge">{{player.imps}}</span><img src="/theme/assets/img/imp.jpg" title="Gold" alt="Gold"/>Imps</li>
+        </dl>
+    </div>
+
     <img src="/theme/assets/img/board.jpg" class="img-responsive"/>
 
 </section>
