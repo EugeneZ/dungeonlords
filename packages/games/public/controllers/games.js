@@ -3,27 +3,19 @@
 angular.module('mean.games').controller('GamesController', ['$scope', '$stateParams', '$location', 'Global', 'Games', 'MeanUser',
     function($scope, $stateParams, $location, Global, Games, MeanUser) {
         $scope.global = Global;
-        $scope.players = [];
+        $scope.active = $scope.global.user._id;
 
         $scope.hasAuthorization = function(game) {
             if (!game || !game.owner) return false;
             return $scope.global.isAdmin || game.owner._id === $scope.global.user._id;
         };
 
-        $scope.create = function(isValid) {
-            if (isValid) {
-                var game = new Games({
-                    title: this.title,
-                    players: $scope.players
-                });
-                game.$save(function(response) {
-                    $location.path('games/' + response._id);
-                });
+        $scope.activeBoard = function(player) {
+            return player.user._id === $scope.active;
+        };
 
-                this.title = '';
-            } else {
-                $scope.submitted = true;
-            }
+        $scope.board = function(player) {
+            $scope.active = player.user._id;
         };
 
         $scope.remove = function(game) {
@@ -58,11 +50,6 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
             }
         };
 
-        $scope.find = function() {
-            Games.query(function(games) {
-                $scope.games = games;
-            });
-        };
 
         $scope.findOne = function() {
             Games.get({
@@ -72,11 +59,5 @@ angular.module('mean.games').controller('GamesController', ['$scope', '$statePar
             });
         };
 
-        $scope.beginCreate = function() {
-            $scope.title = Global.user.name + '\'s Game';
-            MeanUser.query(function(users) {
-                $scope.users = users;
-            });
-        };
     }
 ]);

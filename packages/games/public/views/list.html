@@ -1,21 +1,21 @@
-<section data-ng-controller="GamesController" data-ng-init="find()">
-  <ul class="games unstyled">
-    <li data-ng-repeat="game in games">
-      <span>{{game.created | date:'medium'}}</span> /
-      <span>{{game.owner.name}}</span>
-      <h2>
-        <a data-ng-href="#!/games/{{game._id}}">{{game.title}}</a>
-        <span data-ng-if="hasAuthorization(game)">
-          <a class="btn" href="/#!/games/{{game._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-          </a>
-          <a class="btn" data-ng-click="remove(game);">
-            <i class="glyphicon glyphicon-trash"></i>
-          </a>
-        </span>
-      </h2>
-      <div>{{game.content}}</div>
-    </li>
-  </ul>
-  <h1 data-ng-hide="!games || games.length">No games yet. <br> Why don't you <a href="/#!/games/create">Create One</a>?</h1>
+<section data-ng-controller="ManageGamesController" data-ng-init="find()">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>ID#</th>
+            <th>Title</th>
+            <th>Last Play</th>
+            <th>Players</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="userGame in userGames.games">
+            <td>{{userGame.game._id}}</td>
+            <td>{{userGame.game.title}}</td>
+            <td>{{userGame.game.lastPlayed | date:'medium'}}</td>
+            <td><div data-ng-repeat="player in userGame.game.players">{{player.user.name}}</div></td>
+        </tr>
+      </tbody>
+    </table>
+    <h1 data-ng-hide="!userGames || !userGames.games || userGames.games.length">No games yet. <br> Why don't you <a href="/#!/games/create">Create One</a>?</h1>
 </section>

@@ -16,6 +16,10 @@ var GameSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    lastPlayed: {
+        type: Date,
+        default: Date.now
+    },
     title: {
         type: String,
         required: true,
@@ -243,7 +247,7 @@ GameSchema.path('title').validate(function(title) {
 GameSchema.statics.load = function(id, cb) {
     this.findOne({
         _id: id
-    }).populate('owner', 'name username').exec(cb);
+    }).populate('owner', 'name username').populate('players.user', 'name').exec(cb);
 };
 
 mongoose.model('Game', GameSchema);
