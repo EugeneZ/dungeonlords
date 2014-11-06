@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     Game = mongoose.model('Game'),
     UserGames = mongoose.model('UserGames'),
+    User = mongoose.model('User'),
     _ = require('lodash');
 
 
@@ -46,18 +47,30 @@ exports.create = function(req, res) {
         }
 
         // We need to also add the game to users' game lists
-        game.players.forEach(function(player){
-            if (player && player.user) {
-                UserGames.findOneAndUpdate({ user: player.user }, { $push: { games: { game: game } } }, { upsert: true}, function(err){
-                    if (err){
-                        console.log('Couldn\'t update player list');
-                        // TODO: We saved the game but couldn't update the player game list
-                    }
-                });
-            }
-        });
+        User.find({
+            _id: { $in: req.body.players.map(function(player){
+                return player.user;
+            }) }
+        }, 'name').exec(function(errPlayers, playerList){
 
-        res.json(game);
+            playerList = playerList.map(function(player){
+                return { name: player.name };
+            });
+
+            game.players.forEach(function(player){
+                if (player && player.user) {
+                    UserGames.findOneAndUpdate({ user: player.user }, { $push: { games: { game: game, players: playerList } } }, { upsert: true}, function(err){
+                        if (err){
+                            console.log('Couldn\'t update player list');
+                            // TODO: We saved the game but couldn't update the player game list
+                        }
+                    });
+                }
+            });
+
+            res.json(game);
+
+        });
 
     });
 };
@@ -109,12 +122,13 @@ exports.show = function(req, res) {
  * List of Games
  */
 exports.userGames = function(req, res) {
-    UserGames.findOne({ user: req.user._id }).populate('games.game').sort('-games.game.lastPlayed').exec(function(err, userGames){
+    UserGames.findOne({ user: req.user._id }).populate({path: 'games.game', options: { sort: { lastPlayed: -1 } }}).exec(function(err, userGames){
         if (err) {
             return res.json(500, {
                 error: 'Cannot list the games'
             });
         }
+
         res.json(userGames);
     });
 };

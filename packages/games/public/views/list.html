@@ -1,5 +1,5 @@
 <section data-ng-controller="ManageGamesController" data-ng-init="find()">
-  <table class="table table-striped">
+  <table class="table table-striped table-hover" style="cursor: pointer">
       <thead>
         <tr>
             <th>ID#</th>
@@ -9,13 +9,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="userGame in userGames.games">
+        <tr data-ng-repeat="userGame in userGames.games" data-ng-click="goto(userGame.game._id)">
             <td>{{userGame.game._id}}</td>
             <td>{{userGame.game.title}}</td>
-            <td>{{userGame.game.lastPlayed | date:'medium'}}</td>
-            <td><div data-ng-repeat="player in userGame.game.players">{{player.user.name}}</div></td>
+            <td>{{userGame.game.lastPlayed | relative}}</td>
+            <td><div data-ng-repeat="player in userGame.players">{{player.name}}</div></td>
         </tr>
       </tbody>
     </table>
-    <h1 data-ng-hide="!userGames || !userGames.games || userGames.games.length">No games yet. <br> Why don't you <a href="/#!/games/create">Create One</a>?</h1>
+    <h1 data-ng-show="!userGames || !userGames.games || !userGames.games.length">No games yet. <br> Why don't you <a href="/#!/games/create">Create One</a>?</h1>
 </section>

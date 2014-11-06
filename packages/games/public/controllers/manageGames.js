@@ -10,6 +10,10 @@ angular.module('mean.games').controller('ManageGamesController', ['$scope', '$st
             return $scope.global.isAdmin || game.owner._id === $scope.global.user._id;
         };
 
+        $scope.goto = function(gameid){
+            $location.path('/games/' + gameid);
+        };
+
         $scope.create = function(isValid) {
             if (isValid) {
                 var game = new Games({
@@ -39,4 +43,8 @@ angular.module('mean.games').controller('ManageGamesController', ['$scope', '$st
             });
         };
     }
-]);
+]).filter('relative', function(){
+    return function(date){
+        return moment(date).fromNow();
+    };
+});

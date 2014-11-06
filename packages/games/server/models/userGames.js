@@ -15,7 +15,10 @@ var UserGamesSchema = new Schema({
         game: {
             type: Schema.ObjectId,
             ref: 'Game'
-        }
+        },
+        players: [{
+            name: String
+        }]
         // Leaving room for 'watched' games or whatever
     }]
 });
